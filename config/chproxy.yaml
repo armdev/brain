@@ -1,0 +1,19 @@
+hack_me_please: true
+
+server:
+  http:
+      listen_addr: ":9090"
+
+users:
+  - name: "default"
+    to_cluster: "dev_cluster"
+    to_user: "default"
+
+clusters:
+  - name: "dev_cluster"
+    nodes: [
+      "ch-11:8123",
+      "ch-12:8123",
+      "ch-21:8123",
+      "ch-22:8123"
+    ]

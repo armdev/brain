@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<yandex>
+    <macros>
+        <shard>02</shard>
+        <replica>ch-22</replica>
+        <cluster>dev_cluster</cluster>
+    </macros>
+</yandex>

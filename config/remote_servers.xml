@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<yandex>
+    <remote_servers replace="true">
+        <dev_cluster>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>ch-11</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>ch-12</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>ch-21</host>
+                    <port>9000</port>
+                </replica>
+                <replica>
+                    <host>ch-22</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+        </dev_cluster>
+    </remote_servers>
+</yandex>

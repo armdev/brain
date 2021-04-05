@@ -1,0 +1,54 @@
+version: '3.2'
+
+services:
+  zoo1:
+    image: zookeeper
+    container_name: zookeeper
+    hostname: zoo1
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+    networks:
+      - pubapi
+
+  clickhouse:
+    image: yandex/clickhouse-server:21.3.4.25
+    hostname: ch-11
+    container_name: clickhouse
+    volumes: 
+      - ./config/users.xml:/etc/clickhouse-server/users.xml
+      - ./config/remote_servers.xml:/etc/clickhouse-server/config.d/remote_servers.xml
+      - ./config/zookeeper.xml:/etc/clickhouse-server/config.d/zookeeper.xml
+      - ./config/macros_11.xml:/etc/clickhouse-server/config.d/macros.xml
+    ports:
+      - 8123:8123
+      - 9000:9000
+    depends_on: 
+      - zoo1
+    networks:
+      - pubapi
+      
+      
+  brain:
+    image: brain
+    build: ./brain
+    container_name: brain
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    links:
+      - clickhouse       
+    depends_on: 
+      - clickhouse       
+    ports:
+      - '8989:8989'   
+    networks:
+      - pubapi
+      
+networks:
+  pubapi:
+    driver: bridge
